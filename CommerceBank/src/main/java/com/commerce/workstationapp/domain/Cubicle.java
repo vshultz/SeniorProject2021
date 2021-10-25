@@ -8,21 +8,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Getter @Setter
+@Data
 public class Cubicle {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int cubicleID;
-	private String cubicleName;
+	private String cubicleID;
 	private String floor;
 	private String building;
+	private java.sql.Timestamp timeStamp;
 	
 	
-//	@OneToMany(mappedBy = "user")
-//    List<Reservation> reservations;
+
 
 }

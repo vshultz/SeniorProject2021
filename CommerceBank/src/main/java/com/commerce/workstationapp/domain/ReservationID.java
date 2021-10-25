@@ -11,9 +11,6 @@ import javax.persistence.ManyToOne;
 public class ReservationID implements Serializable {
 	
 	public java.sql.Timestamp startTime;
-	
-	@ManyToOne
-	@JoinColumn(name = "cubicleID")
-	public Cubicle cubicle;
+	public String cubicleID;
 
 }

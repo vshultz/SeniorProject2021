@@ -1,5 +1,8 @@
 package com.commerce.workstationapp.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +17,25 @@ public class UserService {
 	@Autowired 
 	private UserRepo userRepo;
 	
-	//add user after validating that username is not already taken
-	public int join(User user) {
+	
+	public String save(User user) {
 		userRepo.save(user);
 		return user.getUserID();
 		}
+	
+	public void delete(String userID) {
+		userRepo.delete(userRepo.getById(userID));
+	}
+	
+	public Optional<User> findByID(String id) {
+		return userRepo.findById(id);
+	}
+	
+	public List<User> findAll(){
+		return userRepo.findAll();
+	}
+	
+	
 
 
 }
