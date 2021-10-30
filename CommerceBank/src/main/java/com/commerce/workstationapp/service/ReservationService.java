@@ -29,11 +29,11 @@ public class ReservationService {
 		return reservation.getId();
 		}
 	
-	public void delete(String reservationID) {
-		reservationRepo.delete(reservationRepo.getById(reservationID));
+	public void delete(ReservationID id) {
+		reservationRepo.delete(reservationRepo.getById(id));
 	}
 	
-	public Optional<Reservation> findByID(String id) {
+	public Optional<Reservation> findByID(ReservationID id) {
 		return reservationRepo.findById(id);
 	}
 	

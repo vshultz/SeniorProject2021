@@ -16,6 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,7 +29,7 @@ public class Reservation {
 	
 	private java.sql.Timestamp endTime;
 	private String userID;
-	private java.sql.Timestamp timeStamp;
+	private java.sql.Timestamp timeStamp =  new Timestamp(System.currentTimeMillis());
 
 	
 	

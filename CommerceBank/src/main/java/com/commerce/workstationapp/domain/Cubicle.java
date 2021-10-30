@@ -1,5 +1,6 @@
 package com.commerce.workstationapp.domain;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Cubicle {
 	private String cubicleID;
 	private String floor;
 	private String building;
-	private java.sql.Timestamp timeStamp;
+	private java.sql.Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
 	
 	
 

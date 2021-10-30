@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.commerce.workstationapp.domain.ReservationID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +16,8 @@ import com.commerce.workstationapp.domain.Reservation;
 
 
 @Repository
-public interface ReservationRepo extends JpaRepository<Reservation, String>{
+public interface ReservationRepo extends JpaRepository<Reservation, ReservationID>{
 
-	
+
 }
 

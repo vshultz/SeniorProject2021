@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SeniorProject2021.iml" filepath="$PROJECT_DIR$/.idea/SeniorProject2021.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CommerceBank/WorkstationApp.iml" filepath="$PROJECT_DIR$/CommerceBank/WorkstationApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CommerceBank/CommerceBank.iml" filepath="$PROJECT_DIR$/CommerceBank/CommerceBank.iml" />
     </modules>
   </component>
 </project>

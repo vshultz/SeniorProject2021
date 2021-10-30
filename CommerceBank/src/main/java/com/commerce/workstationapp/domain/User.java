@@ -1,5 +1,6 @@
 package com.commerce.workstationapp.domain;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class User {
 	private String lastName;
 	private String email;
 	private int admin;
-	private java.sql.Timestamp timeStamp;
+	private java.sql.Timestamp timeStamp =  new Timestamp(System.currentTimeMillis());
 
 	
 	
