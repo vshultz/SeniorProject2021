@@ -59,14 +59,14 @@ public class MyRestController {
 	 @Autowired
 	 private CubicleService cubicleService;
 	
-	@CrossOrigin
+
 	@GetMapping("/users")
     public ResponseEntity<Object> getUsers()
     {
     	return new ResponseEntity(userService.findAll(), HttpStatus.OK);
     }
 	
-	@CrossOrigin
+
 	@GetMapping("/users/{id}")
     public ResponseEntity<Object> getUsers(@PathVariable String id)
     {
@@ -96,14 +96,14 @@ public class MyRestController {
 	//
 	
 	
-	@CrossOrigin
+
 	@GetMapping("/reservations")
     public ResponseEntity<Object> getReservations()
     {
     	return new ResponseEntity( reservationService.findAll(), HttpStatus.OK);
     }
 	
-	@CrossOrigin
+
 	@GetMapping("/reservation")
     public ResponseEntity<Object> getReservations(@RequestBody ReservationID id)
     {
@@ -131,14 +131,13 @@ public class MyRestController {
 	}
 	
 	//
-	@CrossOrigin
+
 	@GetMapping("/cubicles")
     public List<Cubicle> getCubicles()
     {
     	return cubicleService.findAll();
     }
-	
-	@CrossOrigin
+
 	@GetMapping("/cubicles/{id}")
     public Optional<Cubicle> getCubicles(@PathVariable String id)
     {
@@ -167,79 +166,12 @@ public class MyRestController {
 	
 	
 	//
-	
-	
-	@CrossOrigin(origins = "https://www.xodius.io", maxAge = 3600, allowCredentials = "true", allowedHeaders = "*") //
-	@PostMapping(value = "/login",
-			consumes= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity login(HttpServletResponse response ,@RequestBody LoginInformaiton login){
-		Optional<User> user = userService.findByID(login.username);
-		
-			if(user.isPresent()) {
-				if(user.get().getPassword().equals(login.password)) {
-			Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-			
-			String jws = Jwts.builder().claim("userid",login.username).claim("role", user.get().getAdmin() ).signWith(key).compact();
-			Cookie cookie = new Cookie("token", jws);
-			cookie.setMaxAge(60*60*24);
-			cookie.setDomain("xodius.io");
-			
-			response.addCookie(cookie);
-			HashMap<String, String> r = new HashMap<>();
-			r.put("username", login.username);
-			r.put("role", "" + user.get().getAdmin());
-			return ResponseEntity.ok().body(r);
-			
-				}
-				else {
-					HashMap<String, String> r = new HashMap<>();
-					r.put("error", "Incorrect Password");
-					return ResponseEntity.ok().body(r);
-				}
-		}
-		else {
-			HashMap<String, String> r = new HashMap<>();
-			r.put("error", "Unknown User");
-			return ResponseEntity.ok().body(r);
-		}
-	}
-	
-	@CrossOrigin(origins = "https://www.xodius.io", maxAge = 3600, allowCredentials = "true", allowedHeaders = "*") //
-	@PostMapping(value = "/checkToken",
-			consumes= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity checkToken(HttpServletResponse response ,@RequestBody TokenInformation tokenInfo){
-		Jws<Claims> jws;
-		Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-		
-		try {
-		    jws = Jwts.parserBuilder()  // (1)
-		    .setSigningKey(key)         // (2)
-		    .build()                    // (3)
-		    .parseClaimsJws(tokenInfo.token); // (4)
-		    System.out.println(jws.getBody().get("userid"));
-		    jws.getBody().forEach((k,v)->{
-		    	System.out.println(k + " " + v);
-		    });
-		    // we can safely trust the JWT
-		    String userid = (String) jws.getBody().get("userid");
-		    HashMap<String, String> r = new HashMap<>();
-			r.put("username", userid);
-			return ResponseEntity.ok().body(r);
-		    
-		}    
-		catch (JwtException ex) {       // (5)
-			HashMap<String, String> r = new HashMap<>();
-			r.put("error", "Invalid token");
-			return ResponseEntity.ok().body(r);
-		    // we *cannot* use the JWT as intended by its creator
-		}
-		
-		
-		
-			
-	}
-	
-	
+
+
+
+
+
+
 	
 	@GetMapping("/cubicles/available")
     public List<Cubicle> getAvailable(@RequestParam   String start, @RequestParam  String end)
