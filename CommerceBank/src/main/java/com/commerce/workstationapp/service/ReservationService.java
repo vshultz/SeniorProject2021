@@ -1,4 +1,5 @@
 package com.commerce.workstationapp.service;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class ReservationService {
 		List<Reservation> reserved = findAll();
 		List<Reservation> usersRes = new ArrayList<Reservation>();
 		for(Reservation res : reserved)
-			if(res.getUserID().equals(userName) )
+			if(res.getUserID().equals(userName) && res.getEndTime().after(new Timestamp(System.currentTimeMillis())) )
 				usersRes.add(res);
 		return usersRes;
 		

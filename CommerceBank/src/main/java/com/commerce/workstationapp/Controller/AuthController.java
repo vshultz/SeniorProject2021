@@ -1,5 +1,6 @@
 package com.commerce.workstationapp.Controller;
 
+import com.commerce.workstationapp.AuthenticationHandle;
 import com.commerce.workstationapp.domain.LoginInformaiton;
 import com.commerce.workstationapp.domain.TokenInformation;
 import com.commerce.workstationapp.domain.User;
@@ -24,24 +25,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    public AuthenticationHandle authenticationHandle;
 
-    String secret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
+    public AuthController() {
+        authenticationHandle = new AuthenticationHandle();
+    }
 
     @Autowired
     private UserService userService;
-
-    public static Jws<Claims> parseJwt(String jwtString) {
-        String secret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
-        Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
-                SignatureAlgorithm.HS256.getJcaName());
-
-        Jws<Claims> jwt = Jwts.parserBuilder()
-                .setSigningKey(hmacKey)
-                .build()
-                .parseClaimsJws(jwtString);
-
-        return jwt;
-    }
 
     @PostMapping(value = "/login",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -55,19 +46,9 @@ public class AuthController {
                 claims.put("userId", login.username);
                 claims.put("role", user.get().getAdmin());
 
-                Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret), SignatureAlgorithm.HS256.getJcaName());
+                String token = authenticationHandle.createToken(claims);
 
-                String token = Jwts.builder().setClaims(claims).signWith(hmacKey).compact();
-
-                Cookie cookie = new Cookie("token", token);
-                cookie.setMaxAge(60 * 60 * 24);
-                cookie.setPath("/");
-                cookie.setDomain("xodius.io");
-                response.addCookie(cookie);
-                cookie.setDomain("localhost");
-                response.addCookie(cookie);
-                response.addCookie(cookie);
-
+                response.setHeader("Set-Cookie", "token=" + token + "; HttpOnly; SameSite=None; Max-Age=86400; Expires=Mon, 15-Nov-2022 22:21:31 GMT; Domain=xodius.io; Path=/; Secure");
 
                 responseBody.put("username", login.username);
                 responseBody.put("role", "" + user.get().getAdmin());
@@ -87,11 +68,10 @@ public class AuthController {
         HashMap<String, String> responseBody = new HashMap<>();
 
         try {
-            Jws<Claims> claims = parseJwt(tokenInfo.token);
 
-            claims.getBody().forEach((k, v) -> {
-                System.out.println(k + " " + v);
-            });
+            Jws<Claims> claims = authenticationHandle.parseJwt(tokenInfo.token);
+
+
 
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
