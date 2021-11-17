@@ -1,0 +1,5 @@
+com\commerce\workstationapp\Controller\ReservationController.class
+com\commerce\workstationapp\domain\ReservationInformation$Filter.class
+com\commerce\workstationapp\domain\ReservationInformation.class
+com\commerce\workstationapp\AuthenticationHandle.class
+com\commerce\workstationapp\Controller\AuthController.class
