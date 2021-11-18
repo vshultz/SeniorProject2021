@@ -24,9 +24,12 @@ import java.sql.Timestamp;
 @Data
 public class Reservation {
 
+
+
 	@EmbeddedId
 		private ReservationID id;
-	
+
+
 	private java.sql.Timestamp endTime;
 	private String userID;
 	private java.sql.Timestamp timeStamp =  new Timestamp(System.currentTimeMillis());
