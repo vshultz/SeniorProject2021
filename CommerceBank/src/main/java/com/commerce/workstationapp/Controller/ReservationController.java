@@ -40,11 +40,11 @@ public class ReservationController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity reservation(HttpServletResponse response, @RequestBody ReservationInformation reservationInformation) {
         HashMap<String, Object> responseBody = new HashMap<>();
-        System.out.println(reservationInformation.token);
+
         try {
 
             Jws<Claims> claims = authenticationHandle.parseJwt(reservationInformation.token);
-            claims.getBody().forEach((k,v)->{System.out.println(k + " " + v);});
+
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
 
@@ -61,11 +61,11 @@ public class ReservationController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity reservations(HttpServletResponse response, @RequestBody ReservationInformation reservationInformation) {
         HashMap<String, Object> responseBody = new HashMap<>();
-        System.out.println(reservationInformation.token);
+
         try {
 
             Jws<Claims> claims = authenticationHandle.parseJwt(reservationInformation.token);
-            claims.getBody().forEach((k,v)->{System.out.println(k + " " + v);});
+
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
             if(role == "1")
@@ -86,10 +86,10 @@ public class ReservationController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity delete(HttpServletResponse response, @RequestBody ReservationInformation reservationInformation) {
         HashMap<String, Object> responseBody = new HashMap<>();
-        System.out.println(reservationInformation.token);
+
         try {
             Jws<Claims> claims = authenticationHandle.parseJwt(reservationInformation.token);
-            claims.getBody().forEach((k,v)->{System.out.println(k + " " + v);});
+
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
             if(reservationInformation.filter.reservationID.isEmpty())
@@ -112,11 +112,11 @@ public class ReservationController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity create(HttpServletResponse response, @RequestBody ReservationInformation reservationInformation) {
         HashMap<String, Object> responseBody = new HashMap<>();
-        System.out.println(reservationInformation.token);
+
         try {
 
             Jws<Claims> claims = authenticationHandle.parseJwt(reservationInformation.token);
-            claims.getBody().forEach((k,v)->{System.out.println(k + " " + v);});
+
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
             if(reservationInformation.reservation.isPresent() && userid.equals(reservationInformation.reservation.get().getUserID()))
@@ -136,28 +136,28 @@ public class ReservationController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity filter(HttpServletResponse response, @RequestBody ReservationInformation reservationInformation) {
         HashMap<String, Object> responseBody = new HashMap<>();
-        System.out.println(reservationInformation.token);
+
         try {
 
             Jws<Claims> claims = authenticationHandle.parseJwt(reservationInformation.token);
-            claims.getBody().forEach((k,v)->{System.out.println(k + " " + v);});
+
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
             if(role == "1" || userid.equals(reservationInformation.filter.userID.get())){
+                List<Reservation> unfilteredReservations = reservationService.findAll();
                 List<Reservation> filteredReservations = reservationService.findAll();
-                for (Reservation res: filteredReservations
-                     ) {
-                    if(reservationInformation.filter.userID.isPresent())
+                for (Reservation res: unfilteredReservations) {
+                    if(reservationInformation.filter.userID != null)
                         if(!res.getUserID().equals(reservationInformation.filter.userID.get())) {
                             filteredReservations.remove(res);
                             continue;
                         }
-                    if(reservationInformation.filter.cubicalID.isPresent())
-                        if(!res.getId().cubicleID.equals(reservationInformation.filter.cubicalID.get())) {
+                    if(reservationInformation.filter.cubicleID != null)
+                        if(!res.getId().cubicleID.equals(reservationInformation.filter.cubicleID.get())) {
                             filteredReservations.remove(res);
                             continue;
                         }
-                    if(reservationInformation.filter.startTime.isPresent() && reservationInformation.filter.endTime.isPresent())
+                    if(reservationInformation.filter.startTime != null && reservationInformation.filter.endTime != null)
                         if(!(res.getId().startTime.after(reservationInformation.filter.startTime.get()) && res.getEndTime().before(reservationInformation.filter.endTime.get()))){
                             filteredReservations.remove(res);
                             continue;
@@ -181,11 +181,11 @@ public class ReservationController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity available(HttpServletResponse response, @RequestBody ReservationInformation reservationInformation) {
         HashMap<String, Object> responseBody = new HashMap<>();
-        System.out.println(reservationInformation.token);
+
         try {
 
             Jws<Claims> claims = authenticationHandle.parseJwt(reservationInformation.token);
-            claims.getBody().forEach((k,v)->{System.out.println(k + " " + v);});
+
             String userid = (String) claims.getBody().get("userId");
             String role = claims.getBody().get("role").toString();
             List<Cubicle> availableCubicles;

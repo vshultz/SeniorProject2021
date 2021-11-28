@@ -7,7 +7,7 @@ public class ReservationInformation {
     public Optional<Reservation> reservation;
     public Filter filter;
     public class Filter {
-        public Optional<String> cubicalID;
+        public Optional<String> cubicleID;
         public Optional<String> userID;
         public Optional<ReservationID> reservationID;
         public Optional<java.sql.Timestamp> startTime;

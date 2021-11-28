@@ -66,11 +66,12 @@ public class ReservationService {
 		List<Cubicle> available = cubicleRepo.findAll();
 		List<Reservation> reserved = findAll();
 		for(Reservation res : reserved)
-			if(!(res.getId().startTime.after(end) && res.getEndTime().before(start)))
+			if (start.before(res.getEndTime()) && res.getId().startTime.before(end))
 				available.remove(cubicleRepo.getById(res.getId().cubicleID));
+
 		
 		return available;
 	}
-	
+
 
 }
