@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://xodius.io", "http://localhost:8080", "https://www.xodius.io"));
+        configuration.setAllowedOrigins(Arrays.asList("https://xodius.io", "http://localhost:8080", "https://www.xodius.io", "http://172.24.45.207:8080/"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type"));
         configuration.setAllowCredentials(true);

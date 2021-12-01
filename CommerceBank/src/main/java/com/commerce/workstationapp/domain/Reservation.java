@@ -24,7 +24,11 @@ import java.sql.Timestamp;
 @Data
 public class Reservation {
 
-
+	public Reservation(ReservationID id, Timestamp endTime, String userID) {
+		this.id = id;
+		this.endTime = endTime;
+		this.userID = userID;
+	}
 
 	@EmbeddedId
 		private ReservationID id;

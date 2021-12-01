@@ -4,7 +4,6 @@ import java.util.Optional;
 
 public class ReservationInformation {
     public String token;
-    public Optional<Reservation> reservation;
     public Filter filter;
     public class Filter {
         public Optional<String> cubicleID;

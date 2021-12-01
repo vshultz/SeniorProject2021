@@ -1,6 +1,8 @@
 package com.commerce.workstationapp.service;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,12 +66,21 @@ public class ReservationService {
 	
 	public List<Cubicle> findAvailable(java.sql.Timestamp start, java.sql.Timestamp end){
 		List<Cubicle> available = cubicleRepo.findAll();
-		List<Reservation> reserved = findAll();
-		for(Reservation res : reserved)
-			if (start.before(res.getEndTime()) && res.getId().startTime.before(end))
-				available.remove(cubicleRepo.getById(res.getId().cubicleID));
+		List<Reservation> reserved = reservationRepo.findAll();
 
-		
+		for(Reservation res : reserved) {
+			if ((start.before(res.getId().startTime) && end.after(res.getId().startTime)) ||
+					(start.before(res.getEndTime()) && end.after(res.getEndTime())) ||
+					(start.before(res.getId().startTime) && end.after(res.getEndTime())) ||
+					(start.after(res.getId().startTime) && end.before(res.getEndTime())) ||
+					(start.equals(res.getId().startTime))||
+					(end.equals(res.getEndTime()))) {
+				Cubicle cubicle = cubicleRepo.getById(res.getId().cubicleID);
+				if (available.contains(cubicle))
+					available.remove(cubicle);
+			}
+
+		}
 		return available;
 	}
 

@@ -48,7 +48,7 @@ public class AuthController {
 
                 String token = authenticationHandle.createToken(claims);
 
-                response.setHeader("Set-Cookie", "token=" + token + "; HttpOnly; SameSite=None; Max-Age=86400; Expires=Mon, 15-Nov-2022 22:21:31 GMT; Domain=xodius.io; Path=/; Secure");
+                response.setHeader("Set-Cookie", "token=" + token + ";  SameSite=None; Max-Age=86400; Expires=Mon, 15-Nov-2022 22:21:31 GMT; Domain=xodius.io; Path=/; Secure");
 
                 responseBody.put("username", login.username);
                 responseBody.put("role", "" + user.get().getAdmin());
